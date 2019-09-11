@@ -2,17 +2,26 @@ package com.buka.mooviz.models;
 
 import com.google.gson.annotations.SerializedName;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+
+@Entity
 public class Movie {
 
-
+    @PrimaryKey
     private int id;
     private String title;
     @SerializedName("poster_path")
+    @ColumnInfo(name = "poster_path")
     private String posterPath;
     private double popularity;
     @SerializedName("vote_count")
+    @ColumnInfo(name = "vote_count")
     private double voteCount;
     @SerializedName("release_date")
+    @ColumnInfo(name = "release_date")
     private String releaseDate;
     private  String overview;
 

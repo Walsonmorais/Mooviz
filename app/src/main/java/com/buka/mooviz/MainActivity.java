@@ -16,6 +16,8 @@ import com.buka.mooviz.models.Movie;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
@@ -47,9 +49,9 @@ public class MainActivity extends AppCompatActivity implements MoviesAdapter.OnI
         moviesAdapter = new MoviesAdapter(this);
         moviesRecyclerView.setAdapter(moviesAdapter);
         mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
-        mainViewModel.getPopularMoviesLiveData().observe(this, new Observer<ArrayList<Movie>>() {
+        mainViewModel.getPopularMoviesLiveData().observe(this, new Observer<List<Movie>>() {
             @Override
-            public void onChanged(ArrayList<Movie> movies) {
+            public void onChanged(List<Movie> movies) {
                 moviesAdapter.setMovies(movies);
                 loadingProgressBar.setVisibility(View.INVISIBLE);
             }
@@ -62,9 +64,7 @@ public class MainActivity extends AppCompatActivity implements MoviesAdapter.OnI
     @Override
     public void onItemClicked(Movie movie) {
         Intent intent = new Intent(this,MovieDatailsActivity.class);
-        intent.putExtra(MovieDatailsActivity.EXTRA_MOVIE_TITLE,movie.getTitle());
-        intent.putExtra(MovieDatailsActivity.EXTRA_MOVIE_REALESE_DATE, movie.getReleaseDate());
-        intent.putExtra(MovieDatailsActivity.EXTRA_MOVIE_OVERVIEW, movie.getOverview());
+        intent.putExtra(MovieDatailsActivity.EXTRA_MOVIE_ID, movie.getId());
         startActivity(intent);
     }
 

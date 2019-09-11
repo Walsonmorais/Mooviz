@@ -3,18 +3,20 @@ package com.buka.mooviz;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.buka.mooviz.models.Movie;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class MoviesAdapter extends RecyclerView.Adapter <MoviesAdapter.MovieViewHolder> {
-    private ArrayList<Movie> movies = new ArrayList<>();
+    private List<Movie> movies = new ArrayList<>();
 
     private OnItemClickedListener listener;
     public  MoviesAdapter (OnItemClickedListener listener){
@@ -36,7 +38,13 @@ public class MoviesAdapter extends RecyclerView.Adapter <MoviesAdapter.MovieView
     @Override
     public void onBindViewHolder(@NonNull MovieViewHolder movieViewHolder, int position) {
         Movie movie = movies.get(position);
-        movieViewHolder.titleTextView.setText(movie.getTitle());
+
+        Picasso.get().load("http://image.tmdb.org/t/p/w185/" + movie.getPosterPath()).into(movieViewHolder.posterImageView);
+
+
+        movieViewHolder.movieTitleTextView.setText(movie.getTitle());
+        movieViewHolder.descriptionTextView.setText(movie.getOverview());
+        movieViewHolder.realeaseDateTextView.setText(movie.getReleaseDate());
 
 
 
@@ -47,7 +55,7 @@ public class MoviesAdapter extends RecyclerView.Adapter <MoviesAdapter.MovieView
         return movies.size();
     }
 
-    public void setMovies(ArrayList<Movie> movies) {
+    public void setMovies(List<Movie> movies) {
 
         if (movies != null){
             this.movies = movies;
@@ -59,14 +67,20 @@ public class MoviesAdapter extends RecyclerView.Adapter <MoviesAdapter.MovieView
     }
 
     class MovieViewHolder extends RecyclerView.ViewHolder implements  View.OnClickListener{
-        private TextView titleTextView;
-        private TextView dateTextView;
+        private TextView movieTitleTextView;
+        private TextView descriptionTextView;
+        private TextView realeaseDateTextView;
+        private ImageView posterImageView;
 
 
 
         public  MovieViewHolder(View movieView){
             super(movieView);
-            titleTextView = movieView.findViewById(R.id.textview_title);
+
+            posterImageView = movieView.findViewById(R.id.imageView_poster);
+            movieTitleTextView = movieView.findViewById(R.id.textView_movie_title);
+            descriptionTextView = movieView.findViewById(R.id.textView_description);
+            realeaseDateTextView = movieView.findViewById(R.id.textView_realese_date);
 
 
             movieView.setOnClickListener(this);
